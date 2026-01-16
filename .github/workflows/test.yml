@@ -1,0 +1,39 @@
+name: Test Utilities
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Test Password Generator
+      run: node utils/password_generator.js 20
+    
+    - name: Test Word Counter
+      run: python utils/word_counter.py "Hello World"
+    
+    - name: Test JSON Formatter
+      run: python utils/json_formatter.py '{"test":"data"}'
+    
+    - name: Test UUID Generator
+      run: node utils/uuid_generator.js 5
+    
+    - name: Success
+      run: echo "All utilities tested successfully!"
